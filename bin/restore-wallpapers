@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+mkdir -p "$HOME/Pictures/wallpapers" "$HOME/Pictures"
+
+cp -a "$REPO_DIR/wallpapers/." "$HOME/Pictures/wallpapers/"
+cp -a "$REPO_DIR/config/fastfetch/assets/green_fastfetch.jpg" "$HOME/Pictures/"
+cp -a "$REPO_DIR/config/fastfetch/assets/capuccin_fastfetch.jpg" "$HOME/Pictures/"
+
+echo "Обои и картинки Fastfetch восстановлены."
