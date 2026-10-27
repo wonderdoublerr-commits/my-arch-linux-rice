@@ -104,12 +104,16 @@ if [[ -t 0 ]]; then
         backup_path "$HOME/tools/roblox-mini-antiafk-jump.sh" "tools/roblox-mini-antiafk-jump.sh"
         backup_path "$HOME/autoclick.sh" "home/autoclick.sh"
         backup_path "$local_bin/roblox-afk.sh" "local-bin/roblox-afk.sh"
+        backup_path "$HOME/Documents/Roblox AFK команды.md" "documents/Roblox AFK команды.md"
         mkdir -p "$HOME/tools"
+        mkdir -p "$HOME/Documents"
         cp -a "$repo_dir/extras/roblox/roblox-mini-antiafk.sh" "$HOME/tools/"
         cp -a "$repo_dir/extras/roblox/roblox-mini-antiafk-jump.sh" "$HOME/tools/"
         cp -a "$repo_dir/extras/roblox/autoclick.sh" "$HOME/autoclick.sh"
         cp -a "$repo_dir/extras/roblox/roblox-afk.sh" "$local_bin/"
+        cp -a "$repo_dir/extras/roblox/Roblox AFK команды.md" "$HOME/Documents/"
         chmod +x "$HOME/tools/roblox-mini-antiafk.sh" "$HOME/tools/roblox-mini-antiafk-jump.sh" "$HOME/autoclick.sh" "$local_bin/roblox-afk.sh"
+        echo "Команды сохранены в: $HOME/Documents/Roblox AFK команды.md"
     fi
 fi
 
