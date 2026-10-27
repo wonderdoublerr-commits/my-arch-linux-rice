@@ -88,14 +88,6 @@ hl.bind(
 
 
 -- =========================
--- WONDER MENU
--- =========================
-
-hl.bind(
-    mainMod .. " + SHIFT + R",
-    hl.dsp.exec_cmd("walker -m menus:main")
-)
--- =========================
 -- MICROPHONE
 -- =========================
 
@@ -118,7 +110,7 @@ hl.bind(
 -- =========================
 
 hl.bind(
-    mainMod .. " + SHIFT + SPACE",
+    mainMod .. " + SHIFT + R",
     hl.dsp.exec_cmd("qs -p ~/.config/quickshell/mybar/shell.qml ipc call controlcenter toggle")
 )
 
@@ -129,7 +121,7 @@ hl.bind(
 
 hl.bind(
     mainMod .. " + L",
-    hl.dsp.exec_cmd("hyprlock --config ~/.config/hyprlock/hyprlock.conf")
+    hl.dsp.exec_cmd("hyprlock")
 )
 
 -- =========================
