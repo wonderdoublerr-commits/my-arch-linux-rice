@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# cmatrix в цветах активной темы райса (реальный бинарник: /usr/bin/cmatrix)
+exec /home/wonder/.local/bin/toys matrix "$@"

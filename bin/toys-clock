@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+"""toys-clock — масштабируемые часы в цветах темы райса (замена tty-clock).
+• Блочные цифры рисуются полублоками ▀▄█ — фон терминала НЕ трогается,
+  прозрачность/обои остаются видимыми.
+• Размер автоматически подгоняется под текущий размер окна: в маленьком
+  окне цифры уменьшаются, ничего не обрезается; при ресайзе — пересчёт.
+• Цвета читаются из ~/.config/rice/palette.json каждый кадр — смена темы
+  подхватывается мгновенно."""
+import json, os, shutil, sys, time
+
+RICE = os.environ.get("TOYS_RICE_DIR", os.path.expanduser("~/.config/rice"))
+
+def load_palette():
+    try:
+        with open(os.path.join(RICE, "palette.json")) as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def hx(key, fb):
+    h = str(load_palette().get(key, fb)).lstrip("#")
+    try:
+        return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
+    except Exception:
+        return fb
+
+def fg(rgb):
+    return "\x1b[38;2;%d;%d;%dm" % rgb
+
+FONT = {
+    "0": ("111", "101", "101", "101", "111"),
+    "1": ("010", "110", "010", "010", "111"),
+    "2": ("111", "001", "111", "100", "111"),
+    "3": ("111", "001", "011", "001", "111"),
+    "4": ("101", "101", "111", "001", "001"),
+    "5": ("111", "100", "111", "001", "111"),
+    "6": ("111", "100", "111", "101", "111"),
+    "7": ("111", "001", "010", "010", "010"),
+    "8": ("111", "101", "111", "101", "111"),
+    "9": ("111", "101", "111", "001", "111"),
+    ":": ("0", "1", "0", "1", "0"),
+}
+
+def text_grid(txt, colon_on):
+    rows = ["", "", "", "", ""]
+    for ch in txt:
+        g = FONT[ch] if (ch != ":" or colon_on) else ("0",) * len(FONT[ch])
+        for y in range(5):
+            rows[y] += g[y] + "0"
+    return [r[:-1] for r in rows]
+
+def render():
+    accent = fg(hx("accent", (137, 180, 250)))
+    sub = fg(hx("text2", (166, 173, 200)))
+    W, H = shutil.get_terminal_size((80, 24))
+
+    lt = time.localtime()
+    blink = int(time.time()) % 2 == 0
+    scale, txt = 1, time.strftime("%H:%M", lt)
+    for cand in (time.strftime("%H:%M:%S", lt), time.strftime("%H:%M", lt)):
+        w_px = sum(len(FONT[c]) + 1 for c in cand) - 1
+        s = (W - 2) // w_px
+        if s >= 1:
+            txt, scale = cand, min(s, 12)
+            break
+    grid = text_grid(txt, blink)
+    w_px = len(grid[0])
+
+    clock_rows = (5 * scale + 1) // 2
+    date = time.strftime("%Y-%m-%d", lt)
+    show_date = H >= clock_rows + 3
+    top = max(0, (H - clock_rows - (2 if show_date else 0)) // 2)
+    left = max(0, (W - w_px * scale) // 2)
+
+    buf = ["\x1b[H\x1b[2J"]
+    for r in range(clock_rows):
+        y1, y2 = 2 * r, 2 * r + 1
+        cells = []
+        for x in range(w_px * scale):
+            px = x // scale
+            t_on = y1 < 5 * scale and grid[y1 // scale][px] == "1"
+            b_on = y2 < 5 * scale and grid[y2 // scale][px] == "1"
+            cells.append("█" if (t_on and b_on) else "▀" if t_on else "▄" if b_on else " ")
+        buf.append("\x1b[%d;%dH%s%s\x1b[0m" % (top + r + 1, left + 1, accent, "".join(cells)))
+    if show_date:
+        buf.append("\x1b[%d;%dH%s%s\x1b[0m"
+                   % (top + clock_rows + 2, max(0, (W - len(date)) // 2) + 1, sub, date))
+    sys.stdout.write("".join(buf))
+    sys.stdout.flush()
+
+def pal_stamp():
+    try:
+        return os.path.getmtime(os.path.join(RICE, "palette.json"))
+    except Exception:
+        return 0
+
+def main():
+    signal.signal(signal.SIGTERM, lambda *a: sys.exit(0))
+    sys.stdout.write("\x1b[?1049h\x1b[?25l")
+    sys.stdout.flush()
+    last = None
+    try:
+        while True:
+            key = (time.strftime("%H%M%S"), shutil.get_terminal_size((80, 24)), pal_stamp())
+            if key != last:
+                last = key
+                render()
+            time.sleep(0.1)
+    finally:
+        sys.stdout.write("\x1b[0m\x1b[?25h\x1b[?1049l")
+        sys.stdout.flush()
+
+import signal
+main()

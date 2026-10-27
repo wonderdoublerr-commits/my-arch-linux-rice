@@ -1,0 +1,7 @@
+name = "windows"
+name_pretty = "Окна"
+icon = "window"
+
+[[entries]]
+text = "Открытые окна"
+actions = { "open" = "walker -m windows" }

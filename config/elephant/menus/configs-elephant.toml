@@ -1,0 +1,11 @@
+name = "configs-elephant"
+name_pretty = "Elephant"
+icon = "utilities-terminal"
+
+[[entries]]
+text = "Главное меню"
+actions = { "open" = "printf '%s' 'nvim ~/.config/elephant/menus/main.toml' | wl-copy" }
+
+[[entries]]
+text = "Команды"
+actions = { "open" = "printf '%s' 'nvim ~/.config/elephant/menus/commands.toml' | wl-copy" }

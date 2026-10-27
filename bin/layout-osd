@@ -1,0 +1,23 @@
+#!/bin/bash
+
+sleep 0.05
+
+layout=$(hyprctl devices | awk '
+/^[[:space:]]*Keyboard at/ {
+    in_keyboard=1
+    layout=""
+}
+/^[[:space:]]*active keymap:/ && in_keyboard {
+    layout=$0
+}
+/^[[:space:]]*main: yes/ && in_keyboard {
+    print layout
+    exit
+}
+')
+
+if echo "$layout" | grep -q "Russian"; then
+    swayosd-client --custom-message "RU"
+else
+    swayosd-client --custom-message "EN"
+fi

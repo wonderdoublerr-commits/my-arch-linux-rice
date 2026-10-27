@@ -1,0 +1,7 @@
+name = "clipboard"
+name_pretty = "Буфер обмена"
+icon = "edit-paste"
+
+[[entries]]
+text = "История буфера"
+actions = { "open" = "walker -m clipboard" }

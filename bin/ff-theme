@@ -1,0 +1,13 @@
+#!/bin/bash
+# Переключение темы фастфеча: ff-theme <photo|cappuccino> (атомарно)
+set -e
+THEME="${1:-}"
+THEMES_DIR="$HOME/.config/fastfetch/themes"
+case "$THEME" in
+    photo|cappuccino) ;;
+    *) echo "usage: ff-theme <photo|cappuccino>"; exit 1 ;;
+esac
+cp "$THEMES_DIR/$THEME.jsonc" "$HOME/.config/fastfetch/.config.jsonc.tmp"
+mv "$HOME/.config/fastfetch/.config.jsonc.tmp" "$HOME/.config/fastfetch/config.jsonc"
+echo "$THEME" > "$HOME/.config/rice/.ff_theme"
+echo "fastfetch theme -> $THEME"

@@ -1,0 +1,7 @@
+name = "configs-hyprlock"
+name_pretty = "Hyprlock"
+icon = "system-lock-screen"
+
+[[entries]]
+text = "Конфиг Hyprlock"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/hyprlock.conf' | wl-copy" }

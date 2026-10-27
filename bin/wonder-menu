@@ -1,0 +1,27 @@
+#!/bin/bash
+
+choice=$(printf '%s\n' \
+'🖥️  Приложения' \
+'🌐  Интернет' \
+'⚡  Команды' \
+'📋  Буфер обмена' \
+'📝  Заметки' \
+'📁  Файлы' \
+'🧮  Калькулятор' \
+'🔖  Закладки' \
+'🪟  Окна' \
+'✨  Символы' \
+| walker -d)
+
+case "$choice" in
+    '🖥️  Приложения') walker -m desktopapplications ;;
+    '🌐  Интернет')     walker -m websearch ;;
+    '⚡  Команды')      walker -m runner ;;
+    '📋  Буфер обмена') walker -m clipboard ;;
+    '📝  Заметки')      walker -m todo ;;
+    '📁  Файлы')        walker -m files ;;
+    '🧮  Калькулятор')  walker -m calc ;;
+    '🔖  Закладки')     walker -m bookmarks ;;
+    '🪟  Окна')         walker -m windows ;;
+    '✨  Символы')      walker -m symbols ;;
+esac

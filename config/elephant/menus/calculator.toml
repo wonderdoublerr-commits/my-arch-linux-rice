@@ -1,0 +1,7 @@
+name = "calculator"
+name_pretty = "Калькулятор"
+icon = "accessories-calculator"
+
+[[entries]]
+text = "Калькулятор"
+actions = { "open" = "walker -m calc" }

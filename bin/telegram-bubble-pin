@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -u
+
+while true; do
+    hyprctl clients -j \
+        | jq -r '.[] | select(.class == "org.telegram.desktop")
+            | select(.size[0] <= 700 and .size[1] <= 700)
+            | select(.pinned == false)
+            | .address' \
+        | while IFS= read -r address; do
+            if [[ -n "$address" ]]; then
+                hyprctl setprop "address:${address}" pinned true >/dev/null 2>&1
+                hyprctl setprop "address:${address}" floating true >/dev/null 2>&1
+            fi
+        done
+
+    sleep 0.5
+done

@@ -1,0 +1,43 @@
+name = "configs-hyprland"
+name_pretty = "Hyprland — команды"
+icon = "preferences-desktop"
+
+[[entries]]
+text = "Основной конфиг"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/hyprland.lua' | wl-copy" }
+
+[[entries]]
+text = "Бинды"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/modules/binds.lua' | wl-copy" }
+
+[[entries]]
+text = "Внешний вид"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/modules/appearance.lua' | wl-copy" }
+
+[[entries]]
+text = "Ввод"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/modules/input.lua' | wl-copy" }
+
+[[entries]]
+text = "Аудио"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/modules/audio.lua' | wl-copy" }
+
+[[entries]]
+text = "Автозапуск"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/modules/autostart.lua' | wl-copy" }
+
+[[entries]]
+text = "Курсор"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/modules/cursor.lua' | wl-copy" }
+
+[[entries]]
+text = "Рабочие столы"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/modules/workspaces.lua' | wl-copy" }
+
+[[entries]]
+text = "Hypridle"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/hypridle.conf' | wl-copy" }
+
+[[entries]]
+text = "Hyprlock"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/hyprlock.conf' | wl-copy" }

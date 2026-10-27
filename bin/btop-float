@@ -1,0 +1,6 @@
+#!/bin/bash
+exec kitty \
+    --class btop-terminal \
+    --title btop \
+    --config ~/.config/kitty/btop.conf \
+    -e btop

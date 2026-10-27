@@ -1,0 +1,7 @@
+name = "configs-hypridle"
+name_pretty = "Hypridle"
+icon = "preferences-system-time"
+
+[[entries]]
+text = "Конфиг Hypridle"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/hypridle.conf' | wl-copy" }

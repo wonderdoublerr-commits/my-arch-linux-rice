@@ -1,0 +1,58 @@
+name = "main"
+name_pretty = "Wonder Menu"
+icon = "applications-system"
+
+[[entries]]
+text = "Приложения"
+icon = "applications-other"
+submenu = "apps"
+
+[[entries]]
+text = "Файлы"
+icon = "folder"
+submenu = "files"
+
+[[entries]]
+text = "Буфер"
+icon = "edit-paste"
+submenu = "clipboard"
+
+[[entries]]
+text = "Окна"
+icon = "preferences-system-windows"
+submenu = "windows"
+
+[[entries]]
+text = "Команды"
+icon = "system-run"
+submenu = "commands"
+
+[[entries]]
+text = "Интернет"
+icon = "web-browser"
+submenu = "internet"
+
+[[entries]]
+text = "Заметки"
+icon = "accessories-text-editor"
+submenu = "notes"
+
+[[entries]]
+text = "Калькулятор"
+icon = "accessories-calculator"
+submenu = "calculator"
+
+[[entries]]
+text = "Скриншоты"
+icon = "camera-photo"
+submenu = "screenshots"
+
+[[entries]]
+text = "Звук"
+icon = "audio-volume-high"
+submenu = "audio"
+
+[[entries]]
+text = "Питание"
+icon = "system-shutdown"
+submenu = "power"

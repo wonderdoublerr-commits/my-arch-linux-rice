@@ -1,0 +1,47 @@
+name = "hyprland"
+name_pretty = "Hyprland"
+icon = "preferences-desktop"
+
+[[entries]]
+text = "Перезагрузить конфиг"
+actions = { "open" = "hyprctl reload" }
+
+[[entries]]
+text = "Мониторы"
+actions = { "open" = "kitty -e hyprctl monitors" }
+
+[[entries]]
+text = "Открытые окна"
+actions = { "open" = "kitty -e hyprctl clients" }
+
+[[entries]]
+text = "Рабочие столы"
+actions = { "open" = "kitty -e hyprctl workspaces" }
+
+[[entries]]
+text = "Позиция курсора"
+actions = { "open" = "kitty -e hyprctl cursorpos" }
+
+[[entries]]
+text = "Ошибки конфига"
+actions = { "open" = "kitty -e hyprctl configerrors" }
+
+[[entries]]
+text = "ℹ  Версия Hyprland"
+actions = { "open" = "kitty -e hyprctl version" }
+
+[[entries]]
+text = "Перезапустить Walker"
+actions = { "open" = "systemctl --user restart walker" }
+
+[[entries]]
+text = "Перезапустить Elephant"
+actions = { "open" = "systemctl --user restart elephant" }
+
+[[entries]]
+text = "Перезапустить Quickshell"
+actions = { "open" = "pkill -f 'quickshell -p ~/.config/quickshell/mybar/shell.qml'; quickshell -p ~/.config/quickshell/mybar/shell.qml" }
+
+[[entries]]
+text = "Применить курсор"
+actions = { "open" = "hyprctl setcursor Rage-Gothic 36" }

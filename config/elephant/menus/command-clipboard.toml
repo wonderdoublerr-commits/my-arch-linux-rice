@@ -1,0 +1,43 @@
+name = "command-clipboard"
+name_pretty = "Буфер команд"
+icon = "edit-copy"
+
+[[entries]]
+text = "Hyprland — открыть конфиг"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/hyprland.lua' | wl-copy" }
+
+[[entries]]
+text = "Hyprland — бинды"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/modules/binds.lua' | wl-copy" }
+
+[[entries]]
+text = "Hyprland — внешний вид"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/modules/appearance.lua' | wl-copy" }
+
+[[entries]]
+text = "Hyprland — курсор"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/modules/cursor.lua' | wl-copy" }
+
+[[entries]]
+text = "Hyprland — автозапуск"
+actions = { "open" = "printf '%s' 'nvim ~/.config/hypr/modules/autostart.lua' | wl-copy" }
+
+[[entries]]
+text = "Walker — конфиг"
+actions = { "open" = "printf '%s' 'nvim ~/.config/walker/config.toml' | wl-copy" }
+
+[[entries]]
+text = "Walker — CSS"
+actions = { "open" = "printf '%s' 'nvim ~/.config/walker/themes/winstart/style.css' | wl-copy" }
+
+[[entries]]
+text = "Elephant — главное меню"
+actions = { "open" = "printf '%s' 'nvim ~/.config/elephant/menus/main.toml' | wl-copy" }
+
+[[entries]]
+text = "Elephant — команды"
+actions = { "open" = "printf '%s' 'nvim ~/.config/elephant/menus/commands.toml' | wl-copy" }
+
+[[entries]]
+text = "Quickshell"
+actions = { "open" = "printf '%s' 'nvim ~/.config/quickshell/mybar/shell.qml' | wl-copy" }

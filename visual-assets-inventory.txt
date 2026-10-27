@@ -1,0 +1,12 @@
+/home/wonder/.local/share/icons/hicolor/icon-theme.cache
+/home/wonder/.local/share/icons/Rage-Gothic/cursor.theme
+/home/wonder/.local/share/icons/Rage-Gothic/Creative Commons Legal Code.pdf
+/home/wonder/.local/share/icons/Rage-Gothic/Rage-Gothic-preview.png
+/home/wonder/.local/share/icons/Rage-Gothic/ReadMe
+/home/wonder/.local/share/icons/Rage-Gothic/index.theme
+/home/wonder/Pictures/wallpapers/les1.jpg
+/home/wonder/Pictures/green_fastfetch.jpg
+/home/wonder/Pictures/capuccin_fastfetch.jpg
+/home/wonder/.config/hyprlock/wallpapers/wallpaper.jpg
+/home/wonder/.config/hyprlock/wallpapers/me.jpeg
+/home/wonder/.config/hyprlock/wallpapers/6.png

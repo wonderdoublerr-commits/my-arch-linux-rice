@@ -1,0 +1,39 @@
+#!/bin/bash
+
+choice=$(printf '%s\n' \
+    '⚡  Команды' \
+    '📋  Буфер обмена' \
+    '📝  Заметки' \
+    '🌐  Интернет' \
+    '📁  Файлы' \
+    '🪟  Окна' \
+    '🧮  Калькулятор' \
+    '🚀  Приложения' \
+    | walker -d -p "Wonder Menu")
+
+case "$choice" in
+    '⚡  Команды')
+        walker -m runner
+        ;;
+    '📋  Буфер обмена')
+        walker -m clipboard
+        ;;
+    '📝  Заметки')
+        walker -m todo
+        ;;
+    '🌐  Интернет')
+        walker -m websearch
+        ;;
+    '📁  Файлы')
+        walker -m files
+        ;;
+    '🪟  Окна')
+        walker -m windows
+        ;;
+    '🧮  Калькулятор')
+        walker -m calc
+        ;;
+    '🚀  Приложения')
+        walker -m desktopapplications
+        ;;
+esac

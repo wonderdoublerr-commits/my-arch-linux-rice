@@ -1,0 +1,7 @@
+name = "configs-quickshell"
+name_pretty = "Quickshell"
+icon = "preferences-desktop"
+
+[[entries]]
+text = "Панель"
+actions = { "open" = "printf '%s' 'nvim ~/.config/quickshell/mybar/shell.qml' | wl-copy" }

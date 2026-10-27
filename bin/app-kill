@@ -1,0 +1,28 @@
+#!/bin/bash
+
+PID=$(hyprctl activewindow -j | jq -r '.pid // empty')
+[ -z "$PID" ] && exit 0
+
+# Получаем команду процесса активного окна
+CMD=$(ps -p "$PID" -o comm= 2>/dev/null)
+
+# Steam: штатно выключаем клиент, чтобы он не перезапускался
+if [ "$CMD" = "steam" ] || [ "$CMD" = "steamwebhelper" ]; then
+    steam -shutdown 2>/dev/null
+    sleep 2
+
+    # Если что-то от Steam осталось — добиваем
+    pkill -9 -x steam 2>/dev/null
+    pkill -9 -x steamwebhelper 2>/dev/null
+    pkill -9 -x gameoverlayui 2>/dev/null
+    exit 0
+fi
+
+# Остальные приложения: убиваем всё дерево
+if command -v pstree >/dev/null 2>&1; then
+    PIDS=$(pstree -p "$PID" 2>/dev/null | grep -oP '\(\K[0-9]+(?=\))')
+    kill -9 $PIDS "$PID" 2>/dev/null
+else
+    pkill -9 -P "$PID" 2>/dev/null
+    kill -9 "$PID" 2>/dev/null
+fi

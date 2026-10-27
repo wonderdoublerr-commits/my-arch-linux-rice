@@ -1,0 +1,7 @@
+name = "notes"
+name_pretty = "Заметки"
+icon = "accessories-text-editor"
+
+[[entries]]
+text = "Мои заметки"
+actions = { "open" = "walker -m todo" }

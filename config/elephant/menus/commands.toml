@@ -1,0 +1,53 @@
+name = "commands"
+name_pretty = "Команды"
+icon = "utilities-terminal"
+
+[[entries]]
+text = "Конфиги"
+icon = "accessories-text-editor"
+submenu = "configs"
+
+[[entries]]
+text = "Hyprland"
+icon = "preferences-desktop"
+submenu = "hyprland"
+
+[[entries]]
+text = "Система"
+icon = "computer"
+submenu = "system"
+
+[[entries]]
+text = "Сеть"
+icon = "network-wired"
+submenu = "network"
+
+[[entries]]
+text = "Файлы"
+icon = "folder"
+submenu = "paths"
+
+[[entries]]
+text = "Буфер команд"
+icon = "edit-paste"
+submenu = "command-clipboard"
+
+[[entries]]
+text = "Интерфейс"
+icon = "applications-graphics"
+submenu = "interface"
+
+[[entries]]
+text = "Звук"
+icon = "audio-volume-high"
+submenu = "audio"
+
+[[entries]]
+text = "Скриншоты"
+icon = "camera-photo"
+submenu = "screenshots"
+
+[[entries]]
+text = "Питание"
+icon = "system-shutdown"
+submenu = "power"

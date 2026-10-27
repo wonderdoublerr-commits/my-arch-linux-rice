@@ -1,0 +1,23 @@
+name = "power"
+name_pretty = "Питание"
+icon = "system-shutdown"
+
+[[entries]]
+text = "Заблокировать экран"
+actions = { "open" = "hyprlock --config ~/.config/hyprlock/hyprlock.conf" }
+
+[[entries]]
+text = "Сон"
+actions = { "open" = "systemctl suspend" }
+
+[[entries]]
+text = "Выйти из Hyprland"
+actions = { "open" = "hyprctl dispatch 'hl.dsp.exit()'" }
+
+[[entries]]
+text = "Перезагрузка"
+actions = { "open" = "systemctl reboot" }
+
+[[entries]]
+text = "Выключение"
+actions = { "open" = "systemctl poweroff" }

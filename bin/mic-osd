@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Переключаем текущий микрофон по умолчанию
+wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+
+# Проверяем новое состояние
+if wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q '\[MUTED\]'; then
+    swayosd-client --custom-message "󰍭  OFF"
+else
+    swayosd-client --custom-message "󰍬  ON"
+fi
+
+
+
+

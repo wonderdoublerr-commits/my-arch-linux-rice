@@ -1,0 +1,11 @@
+name = "internet"
+name_pretty = "Интернет"
+icon = "applications-internet"
+
+[[entries]]
+text = "Поиск в интернете"
+actions = { "open" = "walker -m websearch" }
+
+[[entries]]
+text = "Закладки"
+actions = { "open" = "walker -m bookmarks" }

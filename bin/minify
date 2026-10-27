@@ -1,0 +1,3 @@
+#!/bin/bash
+cd "$HOME/Downloads/dota2-minify"
+exec env PYTHONPATH="$HOME/Downloads/dota2-minify/Minify" uv run python -m Minify

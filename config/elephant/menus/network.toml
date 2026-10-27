@@ -1,0 +1,23 @@
+name = "network"
+name_pretty = "Сеть"
+icon = "network-wired"
+
+[[entries]]
+text = "Состояние сети"
+actions = { "open" = "kitty -e ip addr" }
+
+[[entries]]
+text = "IP-адреса"
+actions = { "open" = "kitty -e sh -c 'ip -br addr; read'" }
+
+[[entries]]
+text = "Wi-Fi"
+actions = { "open" = "kitty -e nmcli device wifi list" }
+
+[[entries]]
+text = "Проверить интернет"
+actions = { "open" = "kitty -e ping -c 4 archlinux.org" }
+
+[[entries]]
+text = "NetworkManager"
+actions = { "open" = "kitty -e nmcli connection show" }

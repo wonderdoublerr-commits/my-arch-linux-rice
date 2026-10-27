@@ -1,0 +1,123 @@
+@define-color window_bg_color alpha(#161821, 0.88);
+@define-color accent #7f8ff5;
+@define-color accent_hover #a5b4fc;
+@define-color theme_fg_color #f2f4ff;
+@define-color error_bg_color #ef4444;
+@define-color error_fg_color #ffffff;
+@define-color surface #181a24;
+@define-color surface2 #1e2030;
+@define-color border #2d3042;
+@define-color muted #9299b5;
+* {
+  all: unset;
+}
+popover {
+  background: @surface2;
+  border: 1px solid @border;
+  border-radius: 18px;
+  padding: 10px;
+}
+.normal-icons {
+  -gtk-icon-size: 16px;
+}
+.large-icons {
+  -gtk-icon-size: 32px;
+}
+scrollbar {
+  opacity: 0;
+}
+.box-wrapper {
+  background: @window_bg_color;
+  padding: 22px;
+  border-radius: 24px;
+  border: 1px solid @border;
+  min-width: 700px;
+  min-height: 500px;
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.55),
+    0 0 40px alpha(@accent, 0.08);
+}
+.search-container {
+  border-radius: 14px;
+}
+.input {
+  background: @surface;
+  color: @theme_fg_color;
+  caret-color: @accent_hover;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid @border;
+  font-size: 16px;
+}
+.input:focus {
+  background: @surface2;
+  border: 1px solid alpha(@accent, 0.7);
+}
+.input placeholder {
+  opacity: 0.5;
+}
+.input selection {
+  background: alpha(@accent, 0.35);
+}
+.preview-box,
+.elephant-hint,
+.placeholder {
+  color: @theme_fg_color;
+}
+.list {
+  color: @theme_fg_color;
+  padding: 4px;
+  min-height: 340px;
+}
+child {
+  min-width: 120px;
+  min-height: 80px;
+}
+.item-box {
+  min-width: 120px;
+  min-height: 80px;
+  padding: 6px;
+  margin: 2px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  background: transparent;
+}
+.item-image {
+  -gtk-icon-size: 40px;
+}
+.item-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: @theme_fg_color;
+}
+.item-subtext {
+  opacity: 0;
+}
+.item-quick-activation {
+  opacity: 0;
+}
+child:hover .item-box {
+  background: alpha(#ffffff, 0.04);
+  border: 1px solid alpha(#a5b4fc, 0.15);
+}
+child:selected .item-box {
+  background:
+    linear-gradient(
+      135deg,
+      alpha(#60a5fa, 0.28),
+      alpha(#7f8ff5, 0.30),
+      alpha(#8b5cf6, 0.30)
+    );
+  border: 1px solid alpha(#a5b4fc, 0.45);
+}
+child:selected .item-text {
+  font-weight: 600;
+}
+.scroll {
+  background: transparent;
+}
+scrollbar {
+  opacity: 0;
+  min-width: 0;
+  min-height: 0;
+}

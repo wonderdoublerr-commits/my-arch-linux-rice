@@ -1,0 +1,11 @@
+name = "configs-walker"
+name_pretty = "Walker"
+icon = "applications-system"
+
+[[entries]]
+text = "Конфиг Walker"
+actions = { "open" = "printf '%s' 'nvim ~/.config/walker/config.toml' | wl-copy" }
+
+[[entries]]
+text = "CSS Walker"
+actions = { "open" = "printf '%s' 'nvim ~/.config/walker/themes/winstart/style.css' | wl-copy" }

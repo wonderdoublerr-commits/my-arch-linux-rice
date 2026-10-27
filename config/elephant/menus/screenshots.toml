@@ -1,0 +1,11 @@
+name = "screenshots"
+name_pretty = "Скриншоты"
+icon = "camera-photo"
+
+[[entries]]
+text = "Заморозка + выделение"
+actions = { "open" = "~/.local/bin/freeze-screenshot" }
+
+[[entries]]
+text = "Весь экран в буфер"
+actions = { "open" = "grim - | wl-copy" }

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+last=""
+
+while true; do
+    current=$(hyprctl devices | awk '
+        /main: yes/ {
+            if (layout != "") {
+                print layout
+                exit
+            }
+        }
+        /active layout index:/ {
+            layout=$NF
+        }
+    ')
+
+    if [[ -n "$current" && "$current" != "$last" ]]; then
+        last="$current"
+
+        if [[ "$current" == "1" ]]; then
+            swayosd-client --custom-message "RU"
+        else
+            swayosd-client --custom-message "EN"
+        fi
+    fi
+
+    sleep 0.1
+done

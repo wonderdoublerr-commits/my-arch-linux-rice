@@ -1,0 +1,31 @@
+name = "audio"
+name_pretty = "Звук"
+icon = "audio-volume-high"
+
+[[entries]]
+text = "Громче"
+actions = { "open" = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+" }
+
+[[entries]]
+text = "Тише"
+actions = { "open" = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-" }
+
+[[entries]]
+text = "Мут звука"
+actions = { "open" = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" }
+
+[[entries]]
+text = "Мут микрофона"
+actions = { "open" = "~/.local/bin/mic-osd" }
+
+[[entries]]
+text = "Play / Pause"
+actions = { "open" = "playerctl play-pause" }
+
+[[entries]]
+text = "Следующий трек"
+actions = { "open" = "playerctl next" }
+
+[[entries]]
+text = "Предыдущий трек"
+actions = { "open" = "playerctl previous" }

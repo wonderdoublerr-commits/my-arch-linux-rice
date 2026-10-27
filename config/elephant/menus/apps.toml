@@ -1,0 +1,7 @@
+name = "apps"
+name_pretty = "Приложения"
+icon = "applications-system"
+
+[[entries]]
+text = "Открыть приложения"
+actions = { "open" = "walker -m desktopapplications" }

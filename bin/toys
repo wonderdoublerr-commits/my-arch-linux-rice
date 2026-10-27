@@ -1,0 +1,186 @@
+#!/usr/bin/env bash
+# toys v3 — терминальные игрушки райса в цветах АКТИВНОЙ темы (cappuccino/photo)
+#
+# • Запускается ПРЯМО В ТЕКУЩЕМ ТЕРМИНАЛЕ — рисует по его фактическим
+#   размерам, ничего не обрезается и не съезжает.
+# • ЖИВАЯ СМЕНА ТЕМЫ: пока игрушка запущена, скрипт следит за темой;
+#   rice-theme-toggle -> приложение само перезапустится в новых цветах,
+#   перезапускать терминал или команду не нужно. Выход (q / любая клавиша)
+#   работает как обычно.
+# • Вызывать можно и короткими командами: pipes.sh, lavat, cmatrix,
+#   tty-clock, cbonsai — обёртки лежат в ~/.local/bin и перекрывают системные.
+#
+# Переменные окружения:
+#   TOYS_THEME=cappuccino|photo   принудительная тема
+#   TOYS_RICE_DIR=...             другой каталог состояния (для тестов)
+
+set -euo pipefail
+
+RICE_DIR="${TOYS_RICE_DIR:-$HOME/.config/rice}"
+
+detect_theme() {
+    [ -n "${TOYS_THEME:-}" ] && { echo "$TOYS_THEME"; return; }
+    # Главный сигнал — акцент палитры (она пишется первой и управляет баром),
+    # .current может отставать, если rice-theme упал посреди переключения.
+    local acc
+    acc=$(pal_get accent 89b4fa)
+    case "$acc" in
+        8fc07a|8FC07A) echo photo; return ;;
+        89b4fa|89B4FA) echo cappuccino; return ;;
+    esac
+    if [ -f "$RICE_DIR/.current" ]; then
+        local t
+        t=$(<"$RICE_DIR/.current")
+        case "$t" in cappuccino|photo) echo "$t"; return ;; esac
+    fi
+    echo cappuccino   # фолбэк
+}
+
+# Отпечаток темы: имя темы + палитра (меняется при переключении)
+state_hash() {
+    {
+        cat "$RICE_DIR/.current" 2>/dev/null || true
+        md5sum "$RICE_DIR/palette.json" 2>/dev/null | cut -d' ' -f1 || true
+    } | md5sum | cut -d' ' -f1
+}
+
+# Собрать команду приложения под ТЕКУЩУЮ тему (абсолютные пути — чтобы
+# наши же обёртки в ~/.local/bin не зациклились)
+pal_get() { # pal_get <ключ> <дефолт> -> HEX без #
+    python3 -c '
+import json, sys
+try:
+    print(json.load(open(sys.argv[1])).get(sys.argv[2], sys.argv[3]).lstrip("#"))
+except Exception:
+    print(sys.argv[3].lstrip("#"))
+' "$RICE_DIR/palette.json" "$1" "$2"
+}
+
+blend_hex() { # blend_hex <hex1> <hex2> <0..1> -> смешанный hex
+    python3 -c '
+import sys
+def rgb(h):
+    h = h.lstrip("#")
+    return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
+a, b, t = rgb(sys.argv[1]), rgb(sys.argv[2]), float(sys.argv[3])
+print("%02x%02x%02x" % tuple(round(a[i] + (b[i] - a[i]) * t) for i in range(3)))
+' "$1" "$2" "$3"
+}
+
+build_cmd() {
+    local app="$1"
+    THEME=$(detect_theme)
+    export TOYS_THEME="$THEME"
+
+    case "$THEME" in
+        photo)
+            case "$app" in
+                pipes)  CMD=(/home/wonder/.local/bin/toys-pipes) ;;             # свой движок: truecolor (зел+св-зел / син+св-син), 30 кл/сек
+                lavat)  CMD=(/home/wonder/.local/bin/toys-lavat) ;;             # свой движок: тёмные полупрозрачные пузыри
+                clock)  CMD=(/home/wonder/.local/bin/toys-clock) ;;             # свой движок: масштаб под окно
+                matrix) CMD=(/home/wonder/.local/bin/toys-matrix) ;;            # свой движок: БЕЗ чёрного фона
+                bonsai) CMD=(/usr/bin/cbonsai   -S -k "65,95,113,150") ;;       # зелёные листья/ствол
+            esac ;;
+        *)  # cappuccino
+            case "$app" in
+                pipes)  CMD=(/home/wonder/.local/bin/toys-pipes) ;;             # свой движок: truecolor (син+св-син), 30 кл/сек
+                lavat)  CMD=(/home/wonder/.local/bin/toys-lavat) ;;             # свой движок: тёмные полупрозрачные пузыри
+                clock)  CMD=(/home/wonder/.local/bin/toys-clock) ;;             # свой движок: масштаб под окно
+                matrix) CMD=(/home/wonder/.local/bin/toys-matrix) ;;            # свой движок: БЕЗ чёрного фона
+                bonsai) CMD=(/usr/bin/cbonsai   -S -k "67,60,111,145") ;;       # синие листья/ствол
+            esac ;;
+    esac
+}
+
+WATCHER_PID=""
+CHILD_PID=""
+cleanup() {
+    kill "${WATCHER_PID:-}" "${CHILD_PID:-}" 2>/dev/null || true
+}
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+# Живой цикл: запускает приложение и следит за темой.
+# Сменилась — убивает процесс и стартует заново уже в новых цветах.
+# Вышел сам (q/Ctrl+C) при неизменной теме — просто завершаемся.
+run_live() {
+    local app="$1" base child watcher rc h2
+    base=$(state_hash)
+    while :; do
+        build_cmd "$app"
+        # ВАЖНО: bash подменяет stdin фоновых задач на /dev/null — из-за этого
+        # pipes.sh умирал сразу, а python-движки падали на tcgetattr.
+        # Явно отдаём ребёнку терминал.
+        if [[ -r /dev/tty ]]; then
+            "${CMD[@]}" </dev/tty &
+        else
+            "${CMD[@]}" </dev/null &
+        fi
+        child=$!
+        CHILD_PID=$child
+        (
+            while :; do
+                sleep 0.25
+                if ! kill -0 "$child" 2>/dev/null; then exit; fi
+                if [ "$(state_hash)" != "$base" ]; then
+                    kill -TERM "$child" 2>/dev/null
+                    exit
+                fi
+            done
+        ) &
+        watcher=$!
+        WATCHER_PID=$watcher
+        rc=0
+        wait "$child" || rc=$?
+        kill "$watcher" 2>/dev/null || true
+        wait "$watcher" 2>/dev/null || true
+        WATCHER_PID=""
+        h2=$(state_hash)
+        if [ "$h2" = "$base" ]; then
+            exit "$rc"
+        fi
+        base=$h2
+        echo "[toys] тема сменилась на $(detect_theme) — перезапускаю $app…" >&2
+        sleep 0.15
+    done
+}
+
+APP="${1:-help}"
+case "$APP" in
+    pipes|lavat|clock|matrix|bonsai) run_live "$APP" ;;
+    theme)
+        echo "тема:            $(detect_theme)${TOYS_THEME:+ (из TOYS_THEME)}"
+        case "$(detect_theme)" in
+            photo)
+                echo "pipes.sh : свой движок, зелёный + светло-зелёный (truecolor), 30 клеток/сек"
+                echo "lavat    : свой движок, один тёмный сине-серый цвет (#3d4658)"
+                echo "cmatrix  : свой движок, truecolor, БЕЗ чёрного фона, медленно"
+                echo "clock    : свой движок, масштабируется под размер окна"
+                echo "cbonsai  : листья/ствол 65,95,113,150 (зелёные)"
+                ;;
+            *)
+                echo "pipes.sh : свой движок, синий + светло-синий (truecolor), 30 клеток/сек"
+                echo "lavat    : свой движок, один тёмный сине-серый цвет (#3d4658)"
+                echo "cmatrix  : свой движок, truecolor, БЕЗ чёрного фона, медленно"
+                echo "clock    : свой движок, масштабируется под размер окна"
+                echo "cbonsai  : листья/ствол 67,60,111,145 (синие)"
+                ;;
+        esac
+        echo
+        echo "живая смена темы: rice-theme-toggle перезапустит запущенные игрушки сам"
+        ;;
+    help|*)
+        cat <<EOF
+toys v3 — игрушки райса в цветах активной темы ($(\detect_theme 2>/dev/null || detect_theme))
+использование: toys <pipes|lavat|clock|matrix|bonsai|theme>
+
+те же игрушки доступны обычными командами (обёртки в ~/.local/bin):
+  pipes.sh  lavat  cmatrix  tty-clock  cbonsai
+
+работают в текущем терминале по его размерам;
+clock и matrix — собственные движки (масштаб под окно, прозрачный фон);
+при rice-theme-toggle запущенные игрушки сами перекрашиваются.
+EOF
+        ;;
+esac

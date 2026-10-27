@@ -1,0 +1,22 @@
+#!/bin/bash
+
+FREEZE="/tmp/hypr-freeze.png"
+
+# Замораживаем экран через hyprpicker
+hyprpicker -r -z >/dev/null 2>&1 &
+PICKER_PID=$!
+
+sleep 0.2
+
+# Выбираем область БЕЗ отображения размеров
+GEOMETRY=$(slurp)
+
+# Останавливаем freeze
+kill "$PICKER_PID" 2>/dev/null
+wait "$PICKER_PID" 2>/dev/null
+
+# Если отменили выбор
+[ -z "$GEOMETRY" ] && exit 0
+
+# Делаем скрин выбранной области
+grim -g "$GEOMETRY" - | wl-copy --type image/png

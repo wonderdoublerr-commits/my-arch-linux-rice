@@ -1,0 +1,7 @@
+name = "symbols"
+name_pretty = "Символы"
+icon = "insert-symbol"
+
+[[entries]]
+text = "Выбрать символ"
+actions = { "open" = "walker -m symbols" }

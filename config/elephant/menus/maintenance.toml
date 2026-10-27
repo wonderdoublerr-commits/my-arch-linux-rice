@@ -1,0 +1,23 @@
+name = "maintenance"
+name_pretty = "Обслуживание"
+icon = "system-software-update"
+
+[[entries]]
+text = "Обновить Arch"
+actions = { "open" = "kitty -e paru" }
+
+[[entries]]
+text = "Очистить pacman cache"
+actions = { "open" = "kitty -e sudo pacman -Sc" }
+
+[[entries]]
+text = "Очистить пользовательский cache"
+actions = { "open" = "kitty -e sh -c 'du -sh ~/.cache; read'" }
+
+[[entries]]
+text = "Перезагрузить ПК"
+actions = { "open" = "systemctl reboot" }
+
+[[entries]]
+text = "Выполнить команду"
+actions = { "open" = "walker -m runner" }

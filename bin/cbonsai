@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# cbonsai в цветах активной темы райса (реальный бинарник: /usr/bin/cbonsai)
+exec /home/wonder/.local/bin/toys bonsai "$@"

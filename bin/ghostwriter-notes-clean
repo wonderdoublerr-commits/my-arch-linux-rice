@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+config_file="$HOME/.config/kde.org/ghostwriter.conf"
+notes_file="$HOME/Obsidian-Vault/Obsidian Vault/Заметки.md"
+
+kwriteconfig6 --file "$config_file" --group Window --key sidebarOpen --type bool false
+
+exec env QT_QPA_PLATFORM=xcb ghostwriter "$notes_file"

@@ -1,0 +1,17 @@
+#!/bin/bash
+# Листалка обоев: cycle-wallpaper
+DIR="$HOME/Pictures/wallpapers"
+mkdir -p "$DIR"
+
+mapfile -t IMGS < <(find "$DIR" -maxdepth 1 -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' -o -iname '*.gif' \) | sort)
+
+if [ ${#IMGS[@]} -eq 0 ]; then
+    notify-send -u critical -a "Wallpapers" "Папка пуста" "Положи обои в ~/Pictures/wallpapers"
+    exit 0
+fi
+
+STATE="/tmp/.awww_index"
+[ -f "$STATE" ] || echo -1 > "$STATE"
+i=$(( ($(cat "$STATE") + 1) % ${#IMGS[@]} ))
+echo "$i" > "$STATE"
+awww img "${IMGS[$i]}" && notify-send -a "Wallpapers" "🖼️ Обои" "$(basename "${IMGS[$i]}")"

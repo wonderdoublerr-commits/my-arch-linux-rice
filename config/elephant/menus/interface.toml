@@ -1,0 +1,23 @@
+name = "interface"
+name_pretty = "Интерфейс"
+icon = "applications-graphics"
+
+[[entries]]
+text = "Перезапустить Walker"
+actions = { "open" = "systemctl --user restart walker" }
+
+[[entries]]
+text = "Перезапустить Elephant"
+actions = { "open" = "systemctl --user restart elephant" }
+
+[[entries]]
+text = "Перезапустить Quickshell"
+actions = { "open" = "pkill -f 'quickshell -p ~/.config/quickshell/mybar/shell.qml'; quickshell -p ~/.config/quickshell/mybar/shell.qml" }
+
+[[entries]]
+text = "Перезапустить SwayOSD"
+actions = { "open" = "pkill swayosd-server; swayosd-server" }
+
+[[entries]]
+text = "Применить курсор"
+actions = { "open" = "hyprctl setcursor Rage-Gothic 36" }

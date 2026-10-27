@@ -1,0 +1,7 @@
+name = "files"
+name_pretty = "Файлы"
+icon = "system-file-manager"
+
+[[entries]]
+text = "Открыть файлы"
+actions = { "open" = "walker -m files" }

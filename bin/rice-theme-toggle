@@ -1,0 +1,8 @@
+#!/bin/bash
+# Переключение темы райса одной командой (для кнопки и бинда)
+CUR=$(cat "$HOME/.config/rice/.current" 2>/dev/null || echo cappuccino)
+if [ "$CUR" = "photo" ]; then
+    exec "$HOME/.local/bin/rice-theme" cappuccino
+else
+    exec "$HOME/.local/bin/rice-theme" photo
+fi

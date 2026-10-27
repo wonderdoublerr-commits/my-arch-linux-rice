@@ -1,0 +1,7 @@
+name = "bookmarks"
+name_pretty = "Закладки"
+icon = "bookmark"
+
+[[entries]]
+text = "Мои закладки"
+actions = { "open" = "walker -m bookmarks" }

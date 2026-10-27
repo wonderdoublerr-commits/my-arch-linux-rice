@@ -1,0 +1,19 @@
+name = "paths"
+name_pretty = "Файлы"
+icon = "folder"
+
+[[entries]]
+text = "Домашняя папка"
+actions = { "open" = "nautilus ~" }
+
+[[entries]]
+text = "~/.config"
+actions = { "open" = "nautilus ~/.config" }
+
+[[entries]]
+text = "~/.local"
+actions = { "open" = "nautilus ~/.local" }
+
+[[entries]]
+text = "/mnt/games"
+actions = { "open" = "nautilus /mnt/games" }

@@ -1,0 +1,27 @@
+name = "configs"
+name_pretty = "Конфиги"
+icon = "text-editor"
+
+[[entries]]
+text = "Hyprland"
+submenu = "configs-hyprland"
+
+[[entries]]
+text = "Walker"
+submenu = "configs-walker"
+
+[[entries]]
+text = "Elephant"
+submenu = "configs-elephant"
+
+[[entries]]
+text = "Quickshell"
+submenu = "configs-quickshell"
+
+[[entries]]
+text = "Hyprlock"
+submenu = "configs-hyprlock"
+
+[[entries]]
+text = "Hypridle"
+submenu = "configs-hypridle"

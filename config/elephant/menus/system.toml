@@ -1,0 +1,31 @@
+name = "system"
+name_pretty = "Система"
+icon = "computer"
+
+[[entries]]
+text = "Btop"
+actions = { "open" = "kitty -e btop" }
+
+[[entries]]
+text = "Mission Center"
+actions = { "open" = "missioncenter" }
+
+[[entries]]
+text = "Диски"
+actions = { "open" = "kitty -e lsblk" }
+
+[[entries]]
+text = "Память"
+actions = { "open" = "kitty -e free -h" }
+
+[[entries]]
+text = "Место на дисках"
+actions = { "open" = "kitty -e df -h" }
+
+[[entries]]
+text = "PCI устройства"
+actions = { "open" = "kitty -e lspci" }
+
+[[entries]]
+text = "USB устройства"
+actions = { "open" = "kitty -e lsusb" }
