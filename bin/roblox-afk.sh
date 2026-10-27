@@ -1,4 +1,4 @@
-33#!/bin/bash
+#!/usr/bin/env bash
 
 while true; do
     # ЛКМ

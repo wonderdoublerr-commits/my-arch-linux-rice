@@ -70,6 +70,7 @@ for entry in "$repo_dir/config"/*; do
 done
 for entry in "$repo_dir/bin"/*; do
     name="$(basename "$entry")"
+    [[ "$name" == "roblox-afk.sh" ]] && continue
     backup_path "$local_bin/$name" "local-bin/$name"
 done
 backup_path "$HOME/.bashrc" "home/.bashrc"
@@ -78,12 +79,39 @@ backup_path "$HOME/.bash_profile" "home/.bash_profile"
 echo "==> Восстанавливаю конфиги, скрипты, shell, курсор и обои"
 mkdir -p "$config_dir" "$local_bin" "$HOME/.local/share/icons"
 cp -a "$repo_dir/config/." "$config_dir/"
-cp -a "$repo_dir/bin/." "$local_bin/"
+for entry in "$repo_dir/bin"/*; do
+    name="$(basename "$entry")"
+    [[ "$name" == "roblox-afk.sh" ]] && continue
+    cp -a "$entry" "$local_bin/$name"
+done
 chmod +x "$local_bin"/*
 cp -a "$repo_dir/shell/.bashrc" "$HOME/.bashrc"
 cp -a "$repo_dir/shell/.bash_profile" "$HOME/.bash_profile"
 cp -a "$repo_dir/assets/cursors/." "$HOME/.local/share/icons/"
 "$local_bin/restore-wallpapers"
+
+if [[ -t 0 ]]; then
+    echo
+    echo "Необязательное дополнение: Roblox AFK-скрипты"
+    echo "  • ~/tools/roblox-mini-antiafk.sh — микро-движение раз в 10 минут"
+    echo "  • ~/tools/roblox-mini-antiafk-jump.sh — вариант с прыжком"
+    echo "  • ~/autoclick.sh — клик раз в 13 минут"
+    echo "  • ~/.local/bin/roblox-afk.sh — движение и клики"
+    read -r -p "Установить этот набор? [y/N] " install_roblox
+    if [[ "$install_roblox" =~ ^[Yy]$ ]]; then
+        echo "==> Устанавливаю необязательные Roblox AFK-скрипты"
+        backup_path "$HOME/tools/roblox-mini-antiafk.sh" "tools/roblox-mini-antiafk.sh"
+        backup_path "$HOME/tools/roblox-mini-antiafk-jump.sh" "tools/roblox-mini-antiafk-jump.sh"
+        backup_path "$HOME/autoclick.sh" "home/autoclick.sh"
+        backup_path "$local_bin/roblox-afk.sh" "local-bin/roblox-afk.sh"
+        mkdir -p "$HOME/tools"
+        cp -a "$repo_dir/extras/roblox/roblox-mini-antiafk.sh" "$HOME/tools/"
+        cp -a "$repo_dir/extras/roblox/roblox-mini-antiafk-jump.sh" "$HOME/tools/"
+        cp -a "$repo_dir/extras/roblox/autoclick.sh" "$HOME/autoclick.sh"
+        cp -a "$repo_dir/extras/roblox/roblox-afk.sh" "$local_bin/"
+        chmod +x "$HOME/tools/roblox-mini-antiafk.sh" "$HOME/tools/roblox-mini-antiafk-jump.sh" "$HOME/autoclick.sh" "$local_bin/roblox-afk.sh"
+    fi
+fi
 
 echo "==> Восстанавливаю системные настройки и включаю службы"
 if [[ -d "$repo_dir/system/etc" ]]; then

@@ -31,6 +31,8 @@ cd ~/dotfiles
 The script installs the saved pacman, AUR and Flatpak applications; restores
 dotfiles, scripts, wallpapers and the cursor; and enables the saved services.
 It backs up files that it replaces under `~/.local/state/dotfiles-backups/`.
+During restoration it also asks whether to install the optional Roblox AFK
+script set.
 
 The package snapshot is specific to this computer and includes its graphics
 drivers and AMD microcode. Review it before restoring onto different hardware.
