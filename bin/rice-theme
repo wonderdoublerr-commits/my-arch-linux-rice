@@ -148,16 +148,14 @@ pal_path = HOME + "/.config/rice/palette.json"
 pairs = list(zip(CAP, PHO)) if target == "photo" else list(zip(PHO, CAP))
 
 # обои: капучино — карусель из wallpapers/cappuccino,
-# лес — карусель из wallpapers (всё, кроме папки cappuccino)
+# зелёная тема — всегда les1.jpg.
 import glob as _glob
 WALLDIR = HOME + "/Pictures/wallpapers"
 CAPDIR = WALLDIR + "/cappuccino"
 CAP_IDX = HOME + "/.config/rice/.cappuccino_idx"
 LES_IDX = HOME + "/.config/rice/.wallpaper_idx"
 caps = sorted(_glob.glob(CAPDIR + "/*.jpg") + _glob.glob(CAPDIR + "/*.png"))
-les = sorted(f for f in (_glob.glob(WALLDIR + "/*.jpg") +
-                         _glob.glob(WALLDIR + "/*.png"))
-             if not f.startswith(CAPDIR + "/"))
+les = [WALLDIR + "/les1.jpg"]
 if not caps:
     caps = [HOME + "/Downloads/Telegram Desktop/photo_2026-08-19_19-41-27.jpg"]
 if not les:
